@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import styled from "styled-components";
 
 export function Container(props) {
@@ -11,12 +11,12 @@ export function Container(props) {
             };
             items[item.props.index]['dragObj'] =
                 (<div dragState={items[item.props.index].dragState} draggable={true} onDragStart={(e) => {
-                    e.dataTransfer.setData('text/plain',null);
+                    e.dataTransfer.setData('text/plain', null);
                     props.setDragged(item);
                     items[item.props.index].dragState = 'started';
                     console.log(items[item.props.index]);
                 }}>{item}</div>);
-            return  items[item.props.index]['dragObj'];
+            return items[item.props.index]['dragObj'];
         })}
     </ContainerRoot>
 }

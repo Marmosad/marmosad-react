@@ -1,8 +1,8 @@
-import {BoardCard, Card, CardHead} from "./common/card";
+import {BoardCard, Card, CardHead} from "../common/card";
 import styled from "styled-components";
 import React, {useState} from "react";
-import {ActionButton} from "./common/buttons";
-import {Modal} from "./common/popupModal";
+import {ActionButton} from "../common/buttons";
+import {Modal} from "../common/popupModal";
 
 export function PlayArea(props) {
     const [draggedCard, setDraggedCard] = useState(null);

@@ -1,8 +1,8 @@
-import {ActionButton} from "./common/buttons";
+import {ActionButton} from "../common/buttons";
 import React, {createContext, useContext, useState} from "react";
-import {BoardCard} from "./common/card";
-import {Input} from "./common/form/input";
-import {Modal} from "./common/popupModal";
+import {BoardCard} from "../common/card";
+import {Input} from "../common/form/input";
+import {Modal} from "../common/popupModal";
 
 
 export const DebugModal = (props) => {
