@@ -1,10 +1,15 @@
 import React, {useState} from "react";
 import {Socket} from "./socket";
-import {BoardCard, CardHead, ScoreCard} from "../common/card";
+import {BoardCard} from "../common/card";
 import styled from "styled-components";
-import {DebugModal} from "../debug";
-import {Chat} from "../chat";
-import {PlayArea} from "../playArea";
+import {DebugModal} from "./debug";
+import {Chat} from "./chat";
+import {PlayArea} from "./playArea";
+import {Modal} from "../common/popupModal";
+import {PacmanLoader} from "react-spinners";
+import {css} from '@emotion/core';
+import {Score, ScoreArea} from "./score";
+
 
 export function Board(props) {
     // this bit of code for socket is lazy init, which runs once on construction but not rerender
@@ -17,7 +22,8 @@ export function Board(props) {
     const [isJudge, setIsJudge] = useState(false);
     const [played, setplayed] = useState([]);
     const [blackCard, setBlackCard] = useState({});
-
+    const [loading, setLoading] = useState(true);
+    const [score, setScore] = useState([]);
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
             const update = JSON.parse(e.data);
@@ -27,8 +33,15 @@ export function Board(props) {
                 setIsJudge(update.currentJudge);
                 setHand(update.hand);
                 setBlackCard(update.display.blackCard);
+                setScore(update.display.score);
             }
         }
+    });
+    // loading spinner state
+    React.useEffect(() => {
+        socket.connection().addEventListener('open', () => {
+            setLoading(false)
+        });
     });
 
     // attempt to always properly close socket
@@ -38,24 +51,32 @@ export function Board(props) {
         });
     });
 
-    return (
-        <BoardCard>
-            <ChatScoreDiv>
-                <ScoreCard>
-                    <CardHead>Score Board</CardHead>
-                </ScoreCard>
+
+    return (loading ?
+        (<Modal show={true}>
+            <PacmanLoader css={override}
+                          sizeUnit={"px"}
+                          size={50}
+                          color={'#ff5b5b'}
+                          loading={loading}/>
+            <SpinnerText>Loading our dankest memes...</SpinnerText>
+        </Modal>) : (
+            <BoardCard>
+                <ChatScoreDiv>
+                    <ScoreArea score={score}/>
+                    <SpacerDiv/>
+                    <Chat chat={socket.chat} handleChat={socket.handleChat}/>
+                </ChatScoreDiv>
                 <SpacerDiv/>
-                <Chat chat={socket.chat} handleChat={socket.handleChat}/>
-            </ChatScoreDiv>
-            <SpacerDiv/>
-            <PlayArea hand={hand.map((card, i) => {
-                card.key = i;
-                return card
-            })} played={played} blackCard={blackCard} start={socket.start} nudge={socket.nudge} submit={socket.submit}
-                      boardId={props.boardId} canPlay={!isJudge}/>
-            <DebugModal setDebug={props.setDebug} socket={socket}/>
-        </BoardCard>
-    )
+                <PlayArea hand={hand.map((card, i) => {
+                    card.key = i;
+                    return card
+                })} played={played} blackCard={blackCard} start={socket.start} nudge={socket.nudge}
+                          submit={socket.submit} judge={socket.judge}
+                          boardId={props.boardId} canPlay={!isJudge}/>
+                <DebugModal setDebug={props.setDebug} socket={socket}/>
+            </BoardCard>
+        ))
 }
 
 
@@ -76,5 +97,21 @@ export const SpacerDiv = styled.div`
     flex: 1;
     flex-direction: column;
     justify-content: stretch; 
+`;
+export const SpinnerText = styled.h1`
+    font-size: 40px;
+    min-font-size: 36px;
+    max-font-size: 70px;
+    color: #ff5b5b;
+    bottom: 0;
+    display: block;
+    margin-top: 20px;
+`;
+
+
+const override = css`
+    display: block;
+    top: 0;
+    margin: 90px auto;
 `;
 

@@ -11,15 +11,17 @@ export class Socket {
     connection = () => {
         return this.ws;
     };
-
     start = () => {
         this.ws.send(JSON.stringify({'action': 'start'}));
     };
     nudge = () => {
         this.ws.send(JSON.stringify({'action': 'nudge'}));
     };
-    submit = (card)=>{
+    submit = (card) => {
         this.ws.send(JSON.stringify({'action': 'submit', 'card': card}));
+    };
+    judge = (card) => {
+        this.ws.send(JSON.stringify({'action': 'judge', 'card': card}));
     };
 
     leave() {

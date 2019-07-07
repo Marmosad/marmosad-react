@@ -7,7 +7,7 @@ import {Lobby} from "./components/lobby";
 import {Board} from "./components/board/board";
 import {Nav} from "./components/nav/nav";
 import {DefaultViewContext, useView} from "./components/common/viewRoute/ViewHook";
-import {DebugContext} from "./components/debug";
+import {DebugContext} from "./components/board/debug";
 
 
 function App() {

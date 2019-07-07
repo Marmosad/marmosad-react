@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Card = styled.div`
   overflow: hidden;  
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  border-radius: 5px;
   flex: 1;
   user-select: none;
 `;
@@ -36,6 +35,8 @@ export const BoardCard = styled(Card)`
 
 export const ScoreCard = styled(Card)`
       flex: 50;
+      flex-direction: column;
+      justify-content: start;
 `;
 export const ChatCard = styled(Card)`
     flex-direction: column;

@@ -5,7 +5,7 @@ import {NavTag} from "./navTag";
 import {NavText} from "./navText";
 import goose from '../../asset/goose.svg'
 import {NavIcon} from "./navIcon";
-import {DebugContext} from "../debug";
+import {DebugContext} from "../board/debug";
 
 export const NavBar = styled.nav`
     min-height: 40px;

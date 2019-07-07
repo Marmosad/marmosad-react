@@ -1,8 +1,8 @@
-import {BoardCard, Card, CardHead} from "./common/card";
+import {BoardCard, Card, CardHead} from "../common/card";
 import styled from "styled-components";
 import React, {useState} from "react";
-import {ActionButton} from "./common/buttons";
-import {Modal} from "./common/popupModal";
+import {ActionButton} from "../common/buttons";
+import {Modal} from "../common/popupModal";
 
 export function PlayArea(props) {
     const [draggedCard, setDraggedCard] = useState(null);
@@ -12,6 +12,7 @@ export function PlayArea(props) {
     };
 
     let handleDrop = (e) => {
+        console.log(draggedCard, props.canPlay);
         if (draggedCard && props.canPlay)
             props.submit(draggedCard);
         setDraggedCard(null);
@@ -27,15 +28,16 @@ export function PlayArea(props) {
             }}>
                 <BlackCard>
                     <p>{props.blackCard.body}</p>
-                    {props.blackCard.cardId}
-                    {props.blackCard.cardPack}
+                    {props.blackCard.cardPack}: {props.blackCard.cardId}
                 </BlackCard>
                 {props.played.map(card => {
                     return (
-                        <WhiteCard show={!(card.noDisplay)}>
+                        <WhiteCard show={!(card.noDisplay)} onClick={()=>{
+                            console.log(card);
+                            props.judge(card);
+                        }}>
                             <p>{card.body}</p>
-                            {card.cardId}
-                            {card.cardPack}
+                            {card.cardPack}: {card.cardId}
                         </WhiteCard>
                     )
                 })}
@@ -50,8 +52,7 @@ export function PlayArea(props) {
                                 handleDrag(e, card)
                             }}>
                             <p>{card.body}</p>
-                            {card.cardId}
-                            {card.cardPack}
+                            {card.cardPack}: {card.cardId}
                         </WhiteCard>
                     )
                 })}

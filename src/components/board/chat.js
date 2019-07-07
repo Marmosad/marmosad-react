@@ -1,6 +1,6 @@
-import {CardHead, ChatCard} from "./common/card";
+import {CardHead, ChatCard} from "../common/card";
 import React, {useState} from "react";
-import {ChatInput} from "./common/form/input";
+import {ChatInput} from "../common/form/input";
 import styled from "styled-components";
 
 export function Chat(props) {
