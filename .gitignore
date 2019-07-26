@@ -27,3 +27,7 @@ package-lock.json
 /package-lock.json
 
 yarn\.lock
+
+\.firebaserc
+
+\.firebase/hosting\.YnVpbGQ\.cache

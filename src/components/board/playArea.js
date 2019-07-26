@@ -3,6 +3,9 @@ import styled from "styled-components";
 import React, {useState} from "react";
 import {ActionButton} from "../common/buttons";
 import {Modal} from "../common/popupModal";
+import {PacmanLoader} from "react-spinners";
+import {SpinnerText} from "./board";
+import {css} from '@emotion/core';
 
 export function PlayArea(props) {
     const [draggedCard, setDraggedCard] = useState(null);
@@ -19,7 +22,17 @@ export function PlayArea(props) {
         e.preventDefault();
         e.stopPropagation();
     };
-    return (
+
+    console.log(props.boardLoading);
+
+    return (props.boardLoading ? (<Modal show={true}>
+        <PacmanLoader css={override}
+                      sizeUnit={"px"}
+                      size={50}
+                      color={'#ff5b5b'}
+                      loading={props.boardLoading}/>
+        <SpinnerText>Loading our dankest memes...</SpinnerText>
+    </Modal>) : (
         <PlayAreaCard>
             <CardHead>Played</CardHead>
             <DropArea onDrop={handleDrop} onDragOver={e => {
@@ -66,7 +79,7 @@ export function PlayArea(props) {
             </ButtonArea>
             <InviteModal show={showInviteCode} set={setShowInviteCode} code={props.boardId}/>
         </PlayAreaCard>
-    )
+    ))
 }
 
 
@@ -132,4 +145,10 @@ export const WhiteCard = styled(Card)`
  
   margin: 5px;
   visibility: ${props => props.show ? 'visible' : 'hidden'}
+`;
+
+const override = css`
+    display: block;
+    top: 0;
+    margin: 90px auto;
 `;

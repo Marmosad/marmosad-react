@@ -23,17 +23,26 @@ export function Board(props) {
     const [played, setplayed] = useState([]);
     const [blackCard, setBlackCard] = useState({});
     const [loading, setLoading] = useState(true);
+    const [boardLoading, setBoardLoading] = useState(true);
     const [score, setScore] = useState([]);
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
             const update = JSON.parse(e.data);
+            console.log("update: ", update);
+
             if (update.gameEvent === "update") {
                 const fill = 6 - update.display.whiteCards.length;
                 setplayed(update.display.whiteCards.concat(new Array(fill).fill({"noDisplay": true})));
                 setIsJudge(update.currentJudge);
                 setHand(update.hand);
                 setBlackCard(update.display.blackCard);
-                setScore(update.display.score);
+                setScore(update.display.score);}
+
+            if (update.gameEvent === 'loading') {
+                setBoardLoading(true);
+            }
+            else if (update.gameEvent === 'loaded') {
+                setBoardLoading(false)
             }
         }
     });
@@ -72,7 +81,7 @@ export function Board(props) {
                     card.key = i;
                     return card
                 })} played={played} blackCard={blackCard} start={socket.start} nudge={socket.nudge}
-                          submit={socket.submit} judge={socket.judge}
+                          submit={socket.submit} judge={socket.judge} boardLoading={boardLoading}
                           boardId={props.boardId} canPlay={!isJudge}/>
                 <DebugModal setDebug={props.setDebug} socket={socket}/>
             </BoardCard>
