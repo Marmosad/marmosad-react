@@ -1,11 +1,29 @@
 import React from "react";
 
 export class Socket {
+    lastUpdate = new Date();
+    interval;
+
     constructor(url, boardId, name) {
         this.ws = new WebSocket(url);
         this.ws.addEventListener('open', () => {
             this.ws.send(JSON.stringify({'action': 'join', 'boardId': boardId, 'name': name}));
         });
+
+        this.ws.onmessage = (e) => {
+            const update = JSON.parse(e.data);
+
+            if (update.gameEvent === "update") {
+                this.lastUpdate = new Date();
+            }
+        };
+
+        this.interval = setInterval(() => {
+            if ((new Date()) - this.lastUpdate > 6000 + (Math.floor(Math.random() * 5) + 1) * 1000) {
+                this.nudge();
+                this.lastUpdate = new Date();
+            }
+        }, 2000)
     }
 
     connection = () => {

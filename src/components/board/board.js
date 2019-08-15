@@ -25,13 +25,8 @@ export function Board(props) {
     const [loading, setLoading] = useState(true);
     const [boardLoading, setBoardLoading] = useState(true);
     const [score, setScore] = useState([]);
-    //place holder timer value
-    const [nudgeTimer, setNudgeTimer] = useState(69);
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
-            clearTimeout(nudgeTimer);
-            setNudgeTimer(setTimeout(socket.nudge, 8000));
-
             const update = JSON.parse(e.data);
             console.log("update: ", update);
 

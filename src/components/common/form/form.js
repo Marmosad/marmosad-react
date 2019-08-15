@@ -22,7 +22,7 @@ export function Form(props) {
         e.preventDefault();
         const values = [...formVal];
         const target = e.target;
-        values[i] = (target.type === 'number' ? parseInt(target.value) : target.value);
+        values[i] = (target.type === 'number' ? parseInt(target.value) : target.value.trim());
         setFormVal(values);
     }
 

@@ -6,6 +6,7 @@ import {Modal} from "../common/popupModal";
 import {PacmanLoader} from "react-spinners";
 import {SpinnerText} from "./board";
 import {css} from '@emotion/core';
+import {Input} from "../common/form/input";
 
 export function PlayArea(props) {
     const [draggedCard, setDraggedCard] = useState(null);
@@ -87,11 +88,20 @@ const InviteModal = (props) => {
     let handleClose = () => {
         props.set(false);
     };
+    let invCode = React.createRef();
 
     return (
         <Modal show={props.show}>
             <BoardCard>
-                <Selectable>Invite Code: {props.code}</Selectable>
+                <Input type={'text'} value={props.code} ref={invCode} onClick={(e)=>{
+                    invCode.current.select();
+                    document.execCommand('copy');
+                    e.target.focus();
+                }}/>
+                <ActionButton show onClick={(e)=>{
+                    invCode.current.select();
+                    document.execCommand('copy');
+                }}>copy</ActionButton>
                 <ActionButton show onClick={handleClose}>close</ActionButton>
             </BoardCard>
         </Modal>
