@@ -27,6 +27,7 @@ export function Board(props) {
     const [score, setScore] = useState([]);
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
+            setTimeout(socket.nudge, 8000);
             const update = JSON.parse(e.data);
             console.log("update: ", update);
 
@@ -36,7 +37,9 @@ export function Board(props) {
                 setIsJudge(update.currentJudge);
                 setHand(update.hand);
                 setBlackCard(update.display.blackCard);
-                setScore(update.display.score);}
+                setScore(update.display.score);
+                setBoardLoading(false)
+            }
 
             if (update.gameEvent === 'loading') {
                 setBoardLoading(true);

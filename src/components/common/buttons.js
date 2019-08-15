@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
 export const Button = styled.button`
-    
-    @import url('https://fonts.googleapis.com/css?family=KoHo:200|Kodchasan:200&display=swap');
-    font-family: 'Kodchasan', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
     padding: 0.25em 1em;
     border: none;

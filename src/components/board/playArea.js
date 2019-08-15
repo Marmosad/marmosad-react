@@ -41,7 +41,7 @@ export function PlayArea(props) {
             }}>
                 <BlackCard>
                     <p>{props.blackCard.body}</p>
-                    {props.blackCard.cardPack}: {props.blackCard.cardId}
+                    {props.blackCard.cardPack}{props.blackCard.cardPack? ": " : ""}{props.blackCard.cardId}
                 </BlackCard>
                 {props.played.map(card => {
                     return (
