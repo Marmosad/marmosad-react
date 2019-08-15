@@ -31,3 +31,5 @@ yarn\.lock
 \.firebaserc
 
 \.firebase/hosting\.YnVpbGQ\.cache
+
+*.log
