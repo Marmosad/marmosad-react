@@ -25,26 +25,34 @@ export function Board(props) {
     const [loading, setLoading] = useState(true);
     const [boardLoading, setBoardLoading] = useState(true);
     const [score, setScore] = useState([]);
+    const [state, setState] = useState(0);
+    const [ended, setEnded] = useState(null);
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
             const update = JSON.parse(e.data);
             console.log("update: ", update);
 
-            if (update.gameEvent === "update") {
-                const fill = 6 - update.display.whiteCards.length;
-                setplayed(update.display.whiteCards.concat(new Array(fill).fill({"noDisplay": true})));
-                setIsJudge(update.currentJudge);
-                setHand(update.hand);
-                setBlackCard(update.display.blackCard);
-                setScore(update.display.score);
-                setBoardLoading(false)
-            }
-
-            if (update.gameEvent === 'loading') {
-                setBoardLoading(true);
-            }
-            else if (update.gameEvent === 'loaded') {
-                setBoardLoading(false)
+            switch (update.gameEvent) {
+                case "update":
+                    const fill = 6 - update.display.whiteCards.length;
+                    setplayed(update.display.whiteCards.concat(new Array(fill).fill({"noDisplay": true})));
+                    setIsJudge(update.currentJudge);
+                    setHand(update.hand);
+                    setBlackCard(update.display.blackCard);
+                    setScore(update.display.score);
+                    setBoardLoading(false);
+                    setState(update.gameState);
+                    break;
+                case 'loading':
+                    setBoardLoading(true);
+                    break;
+                case 'loaded':
+                    setBoardLoading(false);
+                    break;
+                case 'end':
+                    console.log('game finished');
+                    setEnded(update);
+                    break;
             }
         }
     });
@@ -84,7 +92,7 @@ export function Board(props) {
                     return card
                 })} played={played} blackCard={blackCard} start={socket.start} nudge={socket.nudge}
                           submit={socket.submit} judge={socket.judge} boardLoading={boardLoading}
-                          boardId={props.boardId} canPlay={!isJudge}/>
+                          boardId={props.boardId} canPlay={!isJudge} state={state} ended={ended}/>
                 <DebugModal setDebug={props.setDebug} socket={socket}/>
             </BoardCard>
         ))

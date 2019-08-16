@@ -6,7 +6,7 @@ export const Button = styled.button`
     border: none;
     -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
     cursor: pointer;
-    visibility: ${props => props.show ? 'visible' : 'hidden'}
+    display: ${props => props.show ? 'initial' : 'none'}
 `;
 
 export const NavButton = styled(Button)`

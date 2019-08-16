@@ -17,7 +17,7 @@ export function ScoreArea(props) {
 }
 
 const Score = styled(Card)`
-  border-left: ${props => props.isJudge ? 'solid 10px #ff5b5b' : 'solid 10px red'}, 5px;
+  border-left: ${props => props.isJudge ? '10px solid  #ff5b5b' : '10px solid #3b3e47'};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
