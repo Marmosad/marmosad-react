@@ -63,11 +63,4 @@ export class Socket {
         }))
     };
 
-    handleChat = (handler) => {
-        this.connection().onmessage = (e) => {
-            if (JSON.parse(e.data).gameEvent === 'chat') {
-                handler(JSON.parse(e.data).message);
-            }
-        };
-    }
 }

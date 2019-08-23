@@ -27,6 +27,8 @@ export function Board(props) {
     const [score, setScore] = useState([]);
     const [state, setState] = useState(0);
     const [ended, setEnded] = useState(null);
+    const [messages, setMessages] = useState([]);
+
     React.useEffect(() => {
         socket.connection().onmessage = (e) => {
             const update = JSON.parse(e.data);
@@ -53,6 +55,9 @@ export function Board(props) {
                     console.log('game finished');
                     setEnded(update);
                     break;
+                case 'chat':
+                    setMessages(messages.concat([update.message]));
+                    console.log('added new chat', messages)
             }
         }
     });
@@ -66,7 +71,7 @@ export function Board(props) {
     // attempt to always properly close socket
     React.useEffect(() => {
         window.addEventListener('beforeunload', () => {
-            this.state.socket.leave();
+            socket.leave();
         });
     });
 
@@ -84,7 +89,7 @@ export function Board(props) {
                 <ChatScoreDiv>
                     <ScoreArea score={score}/>
                     <SpacerDiv/>
-                    <Chat chat={socket.chat} handleChat={socket.handleChat}/>
+                    <Chat messages={messages} chat={socket.chat}/>
                 </ChatScoreDiv>
                 <SpacerDiv/>
                 <PlayArea hand={hand.map((card, i) => {

@@ -8,7 +8,7 @@ export function Form(props) {
     const [formVal, setFormVal] = React.useState(props.children.map((input) => {
         return input.props.type === 'number' ? parseInt(input.props.name) : input.props.name
     }));
-
+    const [canSubmit, setCanSubmit] = React.useState(true);
     //resets default values when switching between forms. This is only useful when using within the tabs.
     React.useEffect(() => {
         setFormVal(props.children.map((input) => {
@@ -37,11 +37,19 @@ export function Form(props) {
                                   }}/>;
                 })}
             <ActionButton onClick={() => {
+                if(!canSubmit){
+                    alert('Slow down friends');
+                    return
+                }
                 let form = {};
                 props.children.map((val, index) => {
                     form[val.props.formName] = formVal[index];
                 });
-                props.handleSubmit(form)
+                props.handleSubmit(form);
+                setCanSubmit(false);
+                setTimeout(()=>{
+                    setCanSubmit(true)
+                }, 750)
             }} show> {props.submitionName} </ActionButton>
         </FormDiv>
     )

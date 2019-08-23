@@ -10,7 +10,6 @@ export const Card = styled.div`
 export const LobbyCard = styled(Card)`
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 
-
   background: white;
   max-width: 500px;
   min-width: 200px;
@@ -20,6 +19,20 @@ export const LobbyCard = styled(Card)`
   flex-direction: column;
   justify-content: start;
 `;
+
+export const HelpCard = styled(Card)`
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+
+  background: white;
+  max-width: 2000px;
+  min-width: 900px;
+  max-height: 1500px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+`;
+
 
 export const BoardCard = styled(Card)`
   padding: 20px;
@@ -33,11 +46,11 @@ export const BoardCard = styled(Card)`
   justify-content: space-between;
 `;
 export const BoardCardColFlex = styled(Card)`
-  padding: 20px;
+  padding: 0;
   flex: 1;
   background: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   align-self: stretch;
   justify-self: stretch;

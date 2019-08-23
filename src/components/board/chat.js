@@ -5,26 +5,21 @@ import styled from "styled-components";
 
 export function Chat(props) {
     const chat = props.chat;
-    const [input, setInput] = useState();
-    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState('');
 
     function sendChat(e) {
         if (e.keyCode === 13) {
             console.log('value', e.target.value);
-            chat(input)
+            chat(input);
+            setInput('')
         }
     }
-
-    props.handleChat((msg) => {
-        console.log(msg);
-        setMessages(messages.concat([msg]));
-    });
 
     return (
         <ChatCard>
             <CardHead>Chat</CardHead>
             <ChatMessageContainer>
-                {messages.map((msg, i) => {
+                {props.messages.map((msg, i) => {
                     return <ChatMessage key={i} you={msg.you}>{msg.name}: {msg.message}</ChatMessage>
                 })}
             </ChatMessageContainer>
@@ -49,9 +44,11 @@ export const ChatMessageContainer = styled.div`
 
 export const ChatMessage = styled.div`
   background: ${props => (props.you ? '#ff8e88' : '#3b3e47')};
-  color: ${props => (props.you ? '#000000' : '#ffffff')};;
+  color: ${props => (props.you ? '#000000' : '#ffffff')};
+ 
   font-size: 20px;
   height: 22px;
-  padding: 1px;
+  padding: 3px;
+  margin:  ${props => (props.you ? '5px 5px 5px 30px' : '5px 30px 5px 5px')};;
 `;
 

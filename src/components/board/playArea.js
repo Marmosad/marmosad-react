@@ -7,6 +7,7 @@ import {PacmanLoader} from "react-spinners";
 import {SpinnerText} from "./board";
 import {css} from '@emotion/core';
 import {Input} from "../common/form/input";
+import {Header} from "../common/tabs";
 
 export function PlayArea(props) {
     const [draggedCard, setDraggedCard] = useState(null);
@@ -103,11 +104,20 @@ const StartGameModal = (props) => {
 
     return (
         <Modal show={props.show}>
+
             <BoardCardColFlex>
+                <Header>
+                    Invite your friends
+                </Header>
                 <div>
                     <InvitationCodeCopyBox canClose={false} code={props.code} set={props.set}/>
+                    <ActionButton show onClick={props.start}>Start</ActionButton>
                 </div>
-                <ActionButton show onClick={props.start}>Start</ActionButton>
+                <br/>
+                I know you still see the Packman loader in the back, it's a feature trust me :')
+                <br/>
+                <br/>
+                This prompt closes when you start, make sure you aren't missing anyone, the game breaks if anyone joins after you start (drunk me didn't handle this error)
             </BoardCardColFlex>
         </Modal>
     );
